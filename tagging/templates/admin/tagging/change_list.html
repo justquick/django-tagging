@@ -1,0 +1,30 @@
+{% extends 'admin/change_list.html' %}
+
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tagcloud.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tinysort.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    $.getJSON("/api/tags/?referer=" + window.location.pathname,
+        function(data){
+            if(data.length){
+                $.each(data, function(i,item){
+                    elm = $('<li/>').attr('value', item.size).attr('title', item.name);
+                    link = $('<a/>').attr('href', '?q='+item.name).append(item.name);
+                    elm.append(link);
+                    $('#xlist').append(elm);
+                });
+                $("#xlist").tagcloud({colormax:"417690",colormin:"ddd",sizemin:16,sizemax:28,height:100}).find("li").tsort();
+            } else {
+                $("#tag-cloud").remove();
+                $("#xfull").remove();
+            }
+    });
+});
+</script>
+{% endblock %}
+
+{% block result_list %}
+<div id="tag-cloud" class="actions"><ul id="xlist"></ul></div>
+{{ block.super }}
+{% endblock %}
