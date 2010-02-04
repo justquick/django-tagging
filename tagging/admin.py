@@ -14,8 +14,8 @@ class TaggedAdmin(admin.ModelAdmin):
     change_form_template = 'admin/tagging/change_form.html'
     change_list_template = 'admin/tagging/change_list.html'
     
-    class Media:
-        js = ('http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js',)
+    #class Media:
+    #    js = ('http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js',)
 
 for model,modeladmin in admin.site._registry.items():
     if model in registry:
